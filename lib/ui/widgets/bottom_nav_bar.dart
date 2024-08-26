@@ -9,35 +9,34 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
 
     return BottomNavigationBar(
+        selectedItemColor: colorScheme.error,
+        unselectedItemColor: colorScheme.primary,
         currentIndex: selectedIndex,
         onTap: onTap,
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.category_outlined),
-            activeIcon: Icon(Icons.category_rounded),
             label: "Categories",
-            backgroundColor: colors.primary,
+            backgroundColor: Color.fromRGBO(0, 255, 0, 1),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
             activeIcon: Icon(Icons.home),
             label: "Home",
-            backgroundColor: colors.primary,
+            backgroundColor: Color.fromRGBO(255, 0, 0, 1),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.favorite_border_outlined),
             activeIcon: Icon(Icons.favorite),
             label: "Favorites",
-            backgroundColor: colors.primary,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person_4_outlined),
             activeIcon: Icon(Icons.person),
             label: "Profile",
-            backgroundColor: colors.primary,
           )
         ]);
   }

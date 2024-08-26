@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class MySearchDelegate extends SearchDelegate {
+class CustomSearchDelegate extends SearchDelegate {
   @override
-  String get searchFieldLabel => "Buscar";
+  String get searchFieldLabel => "Searching";
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -20,7 +20,7 @@ class MySearchDelegate extends SearchDelegate {
     widgets.add(TextButton(
       child: const Text("Buscar"),
       onPressed: () {
-        query = "buscando";
+        query = "Searching";
       },
     ));
 
@@ -39,11 +39,11 @@ class MySearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    return Text("Result");
+    return const Text("Result");
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return Text("Sugestions");
+    return const Text("Sugestions");
   }
 }

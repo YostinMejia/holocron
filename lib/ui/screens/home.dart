@@ -24,6 +24,7 @@ class _HomeState extends State<Home> {
         child: const Text("Categories"),
       ),
       Stack(
+      
         children: [
           CharacterDisplay(
             peopleDetails: starWarsCharacters,
@@ -88,6 +89,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surface,
       extendBodyBehindAppBar: true,
       appBar: const CustomAppBar(),
       body: IndexedStack(index: selectedIndex, children: pages),

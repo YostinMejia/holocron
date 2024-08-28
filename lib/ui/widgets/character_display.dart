@@ -1,31 +1,29 @@
 import 'package:flutter/material.dart';
 
 class CharacterDisplay extends StatelessWidget {
-  List<Map<String, dynamic>> peopleDetails;
+  final List<Map<String, dynamic>> peopleDetails;
 
-  CharacterDisplay({super.key, required this.peopleDetails});
+  const CharacterDisplay({super.key, required this.peopleDetails});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: const Color.fromARGB(255, 0, 0, 0),
       width: double.maxFinite,
       height: double.maxFinite,
       child: PageView.builder(
           scrollDirection: Axis.vertical,
           itemBuilder: (context, index) {
             return Column(
+              
               children: [
                 Flexible(
                     flex: 4,
-                    child: peopleDetails[index % peopleDetails.length]
-                                ["imageUrl"] !=
-                            null
+                    child: peopleDetails[index % peopleDetails.length]["imageUrl"] !=null
                         ? DisplayImage(
                             imageUrl:
                                 peopleDetails[index % peopleDetails.length]
                                     ["imageUrl"],
-                            aspectRatio: 9 / 16,
+                            aspectRatio: 9/16 ,
                           )
                         : const Text("No image available")),
                 Flexible(
@@ -57,7 +55,7 @@ class DisplayImage extends StatelessWidget {
           loadingBuilder: (context, child, ImageChunkEvent? loadingProgress) {
             return loadingProgress == null
                 ? child
-                : const Center(child: CircularProgressIndicator());
+                : const Center(child: CircularProgressIndicator.adaptive());
           },
           errorBuilder: (context, error, stackTrace) {
             return Center(
@@ -73,19 +71,45 @@ class DisplayImage extends StatelessWidget {
 }
 
 class DisplayElementCharacterics extends StatelessWidget {
-  Map<String, dynamic> peopleDetails;
-  DisplayElementCharacterics({super.key, required this.peopleDetails});
+  
+  final Map<String, dynamic> peopleDetails;
+  const DisplayElementCharacterics({super.key, required this.peopleDetails});
 
   @override
   Widget build(BuildContext context) {
+    ColorScheme colors = Theme.of(context).colorScheme;
+    TextTheme fonts = Theme.of(context).textTheme;
     Iterable<String> keys = peopleDetails.keys;
 
     return ListView.builder(
+
       itemCount: keys.length,
       itemBuilder: (context, index) {
         String characteristic = keys.elementAt(index);
 
-        return Text("$characteristic: ${peopleDetails[characteristic]}");
+        return RichText(text: TextSpan(
+          children: [
+            TextSpan(
+              text: "$characteristic: ",
+              style: TextStyle(
+                color: colors.secondary,
+                fontSize: fonts.bodyMedium?.fontSize,
+                fontStyle: fonts.bodyMedium?.fontStyle,
+                fontFamily: fonts.bodyMedium?.fontFamily
+              )
+            ),
+            TextSpan(
+              text: "${peopleDetails[characteristic]}",
+              style: TextStyle(
+                color: colors.onSurface,
+                fontSize: fonts.bodyMedium?.fontSize,
+                fontStyle: fonts.bodyMedium?.fontStyle,
+                fontFamily: fonts.bodyMedium?.fontFamily
+              )
+            )
+
+          ]
+        ),);
       },
     );
   }

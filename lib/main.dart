@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:star_wars/ui/theme/theme.dart';
+import 'package:star_wars/ui/theme/util.dart';
 import 'package:star_wars/ui/screens/home.dart';
 
 void main() {
@@ -11,14 +13,16 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final brightness = View.of(context).platformDispatcher.platformBrightness;
+    TextTheme textTheme = createTextTheme(context, "Russo One", "Audiowide");
+    MaterialTheme materialTheme = MaterialTheme(textTheme);
+
     return MaterialApp(
         title: "Star Wars Dex",
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(
-              seedColor: const Color.fromRGBO(3, 48, 245, 1),
-              brightness: Brightness.dark),
-        ),
+        theme: brightness == Brightness.light
+            ? materialTheme.light()
+            : materialTheme.dark(),
         home: const Home());
   }
 }

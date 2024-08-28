@@ -9,34 +9,58 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ColorScheme colorScheme = Theme.of(context).colorScheme;
-
+    ColorScheme colors = Theme.of(context).colorScheme;
+    TextTheme fonts = Theme.of(context).textTheme;
     return BottomNavigationBar(
-        selectedItemColor: colorScheme.error,
-        unselectedItemColor: colorScheme.primary,
+        elevation: 0,
+        selectedItemColor: colors.onSecondaryContainer,
+        unselectedItemColor: colors.onSecondaryContainer,
+        selectedLabelStyle: fonts.labelMedium,
+        unselectedLabelStyle: fonts.labelMedium,
         currentIndex: selectedIndex,
         onTap: onTap,
-        items: const [
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.category_outlined),
+            icon: Icon(Icons.category_outlined,
+                color: colors.onSecondaryContainer),
+            activeIcon: Icon(
+              Icons.category,
+              color: colors.onSecondaryContainer,
+            ),
             label: "Categories",
-            backgroundColor: Color.fromRGBO(0, 255, 0, 1),
+            backgroundColor: colors.secondaryContainer,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            activeIcon: Icon(Icons.home),
+            icon: Icon(
+              Icons.home_outlined,
+              color: colors.onSecondaryContainer,
+            ),
+            activeIcon: Icon(
+              Icons.home,
+              color: colors.onSecondaryContainer,
+            ),
             label: "Home",
-            backgroundColor: Color.fromRGBO(255, 0, 0, 1),
+            backgroundColor: colors.secondaryContainer,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.favorite_border_outlined),
-            activeIcon: Icon(Icons.favorite),
+            icon: Icon(Icons.favorite_border_outlined,
+                color: colors.onSecondaryContainer),
+            activeIcon: Icon(
+              Icons.favorite,
+              color: colors.onSecondaryContainer,
+            ),
             label: "Favorites",
+            backgroundColor: colors.secondaryContainer,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person_4_outlined),
-            activeIcon: Icon(Icons.person),
+            icon: Icon(Icons.person_outline,
+                color: colors.onSecondaryContainer),
+            activeIcon: Icon(
+              Icons.person,
+              color: colors.onSecondaryContainer,
+            ),
             label: "Profile",
+            backgroundColor: colors.secondaryContainer,
           )
         ]);
   }

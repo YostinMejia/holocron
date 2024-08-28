@@ -11,10 +11,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       forceMaterialTransparency:
           true, // Allows clicks on elements behind the AppBar and makes the AppBar transparent
-      title: const Icon(Icons.rocket_launch),
+      title: Icon(
+        Icons.rocket_launch,
+        color: Theme.of(context).colorScheme.primary,
+      ),
       actions: [
         IconButton(
-          icon: const Icon(Icons.search),
+          icon: Icon(
+            Icons.search,
+            color: Theme.of(context).colorScheme.primary,
+          ),
           onPressed: () async {
             dynamic value = await showSearch(
                 context: context, delegate: CustomSearchDelegate());

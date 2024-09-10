@@ -9,8 +9,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      forceMaterialTransparency:
-          true, // Allows clicks on elements behind the AppBar and makes the AppBar transparent
+      forceMaterialTransparency: true, // Allows clicks on elements behind the AppBar and makes the AppBar transparent
       title: Icon(
         Icons.rocket_launch,
         color: Theme.of(context).colorScheme.primary,

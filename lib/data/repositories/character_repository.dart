@@ -1,16 +1,16 @@
 import 'package:star_wars/data/datasource/graphql_datasource.dart';
 import 'package:star_wars/data/datasource/rest_datasource.dart';
-import 'package:star_wars/data/models/person_model.dart';
+import 'package:star_wars/data/models/character_model.dart';
 
-class PeopleRepository {
+class CharacterRepository {
   final GraphQlDataSource graphQlDataSource;
   final RESTDataSource restDataSource;
 
-  PeopleRepository(
+  CharacterRepository(
       {required this.graphQlDataSource, required this.restDataSource});
 
-  Future<List<PersonModel>> fetchPeople([int? amount]) async {
-    List<PersonModel> peopleGraphql = await restDataSource.getAllPeople();;
+  Future<List<CharacterModel>> fetchPeople([int? amount]) async {
+    List<CharacterModel> peopleGraphql = await restDataSource.getAllPeople();
 
     if (peopleGraphql.isEmpty) {
       return graphQlDataSource.getAllPeople();

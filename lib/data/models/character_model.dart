@@ -1,4 +1,4 @@
-class PersonModel {
+class CharacterModel {
   String id;
   String? birthYear;
   String? eyeColor;
@@ -10,7 +10,7 @@ class PersonModel {
   double? height;
   double? mass;
 
-  PersonModel({
+  CharacterModel({
     required this.id,
     required this.birthYear,
     required this.eyeColor,
@@ -23,7 +23,7 @@ class PersonModel {
     this.mass,
   });
 
-  factory PersonModel.fromJson(Map<String, dynamic> json) => PersonModel(
+  factory CharacterModel.fromJson(Map<String, dynamic> json) => CharacterModel(
         id: json["id"].toString(),
         name: json["name"],
         birthYear: json["birthYear"],

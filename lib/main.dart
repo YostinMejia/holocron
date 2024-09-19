@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:star_wars/bloc/character_bloc.dart';
 import 'package:star_wars/config/graphql_config.dart';
 import 'package:star_wars/data/datasource/graphql_datasource.dart';
 import 'package:star_wars/data/datasource/rest_datasource.dart';
-import 'package:star_wars/data/models/person_model.dart';
-import 'package:star_wars/data/repositories/person_repository.dart';
+import 'package:star_wars/data/repositories/character_repository.dart';
 import 'package:star_wars/ui/screens/home.dart';
 import 'package:star_wars/ui/theme/theme.dart';
 import 'package:star_wars/ui/theme/util.dart';
@@ -24,13 +25,29 @@ class MainApp extends StatelessWidget {
     TextTheme textTheme = createTextTheme(context, "Russo One", "Audiowide");
     MaterialTheme materialTheme = MaterialTheme(textTheme);
 
-    return MaterialApp(
-        title: "Star Wars Dex",
-        debugShowCheckedModeBanner: false,
-        theme: brightness == Brightness.light
-            ? materialTheme.light()
-            : materialTheme.dark(),
-        home: const MainTemplateState());
+    return RepositoryProvider(
+      create: (context) => CharacterRepository(
+          restDataSource: RESTDataSource(
+              baseUrl: "https://akabab.github.io/starwars-api/api",
+              getAllPath: "/all.json",
+              getByIDPath: "/id"),
+          graphQlDataSource: GraphQlDataSource(
+              graphQLClient: GraphQlConfig(
+                      link:
+                          "https://swapi-graphql.netlify.app/.netlify/functions/index")
+                  .client())),
+      child: BlocProvider(
+        create: (context) =>
+            CharactersBloc(context.read<CharacterRepository>()),
+        child: MaterialApp(
+            title: "Star Wars Dex",
+            debugShowCheckedModeBanner: false,
+            theme: brightness == Brightness.light
+                ? materialTheme.light()
+                : materialTheme.dark(),
+            home: const MainTemplateState()),
+      ),
+    );
   }
 }
 
@@ -43,16 +60,13 @@ class MainTemplateState extends StatefulWidget {
 
 class _MainTemplateStateState extends State<MainTemplateState> {
   int selectedIndex = 1;
-  bool loaded = false;
-  List<PersonModel> starWarsCharacters = [];
+
   late List<Widget> pages = [
     Container(
       alignment: Alignment.center,
       child: const Text("Categories"),
     ),
-    Home(
-      starWarsCharacters: starWarsCharacters,
-    ),
+    Home(),
     Container(
       alignment: Alignment.center,
       child: const Text("favorites"),
@@ -62,28 +76,11 @@ class _MainTemplateStateState extends State<MainTemplateState> {
       child: const Text("profile"),
     )
   ];
-  Future<void> loadPeople() async {
-    PeopleRepository peopleRepository = PeopleRepository(
-        restDataSource: RESTDataSource(
-            baseUrl: "https://akabab.github.io/starwars-api/api",
-            getAllPath: "/all.json",
-            getByIDPath: "/id"),
-        graphQlDataSource: GraphQlDataSource(
-            graphQLClient: GraphQlConfig(
-                    link:
-                        "https://swapi-graphql.netlify.app/.netlify/functions/index").client()
-          )
-    );
-    starWarsCharacters = await peopleRepository.fetchPeople();
-    setState(() {
-      loaded = true;
-    });
-  }
 
   @override
   void initState() {
     super.initState();
-    loadPeople();
+    context.read<CharactersBloc>().add(CharacterFetched());
   }
 
   @override
@@ -92,9 +89,7 @@ class _MainTemplateStateState extends State<MainTemplateState> {
       backgroundColor: Theme.of(context).colorScheme.surface,
       extendBodyBehindAppBar: true,
       appBar: const CustomAppBar(),
-      body: loaded
-          ? IndexedStack(index: selectedIndex, children: pages)
-          : const Center(child: CircularProgressIndicator()),
+      body: IndexedStack(index: selectedIndex, children: pages),
       bottomNavigationBar: CustomBottomNavigationBar(
           selectedIndex: selectedIndex,
           onTap: (index) => {
@@ -105,3 +100,4 @@ class _MainTemplateStateState extends State<MainTemplateState> {
     );
   }
 }
+

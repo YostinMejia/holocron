@@ -19,10 +19,12 @@ class CharacterDisplay extends StatelessWidget {
             return Stack(
               fit: StackFit.expand,
               children: [
-                charactersDetails[index % charactersDetails.length].image != null
+                charactersDetails[index % charactersDetails.length].image !=
+                        null
                     ? NetworkImageLoader(
                         imageUrl:
-                            charactersDetails[index % charactersDetails.length].image!)
+                            charactersDetails[index % charactersDetails.length]
+                                .image!)
                     : const Center(child: Text("No image available")),
                 DraggableScrollableSheet(
                     initialChildSize: 0.14,
@@ -46,7 +48,8 @@ class CharacterDisplay extends StatelessWidget {
                                     offset: const Offset(0, -kToolbarHeight),
                                     child: DisplayElementCharacteristics(
                                         charactersDetails: charactersDetails[
-                                                index % charactersDetails.length]
+                                                index %
+                                                    charactersDetails.length]
                                             .toJson(),
                                         controller: scrollController),
                                   )));

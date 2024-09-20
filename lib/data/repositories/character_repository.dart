@@ -9,13 +9,13 @@ class CharacterRepository {
   CharacterRepository(
       {required this.graphQlDataSource, required this.restDataSource});
 
-  Future<List<CharacterModel>> fetchPeople([int? amount]) async {
-    List<CharacterModel> peopleGraphql = await restDataSource.getAllPeople();
+  Future<List<CharacterModel>> fetchCharacter([int? amount]) async {
+    List<CharacterModel> characterGraphql = await restDataSource.getAllCharacter();
 
-    if (peopleGraphql.isEmpty) {
-      return graphQlDataSource.getAllPeople();
+    if (characterGraphql.isEmpty) {
+      return graphQlDataSource.getAllCharacter();
     }
   
-    return peopleGraphql;
+    return characterGraphql;
   }
 }

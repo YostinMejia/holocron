@@ -21,7 +21,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             color: Theme.of(context).colorScheme.primary,
           ),
           onPressed: () async {
-            dynamic value = await showSearch(
+            await showSearch(
                 context: context, delegate: CustomSearchDelegate());
           },
         ),

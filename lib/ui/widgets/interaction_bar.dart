@@ -19,7 +19,6 @@ class _CustomInteractionBarState extends State<CustomInteractionBar> {
         Column(
           children: [
             IconButton(
-              //TODO: define wich stateholder im gonna use and if its necesary to add user´s informatión, like comments, favirorites
               onPressed: () {
                 setState(() {
                   widget.liked = !widget.liked;

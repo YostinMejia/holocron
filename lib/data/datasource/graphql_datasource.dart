@@ -6,13 +6,13 @@ class GraphQlDataSource {
 
   GraphQlDataSource({required this.graphQLClient});
 
-  Future<List<CharacterModel>> getAllPeople({int? first , int? last }) async {
+  Future<List<CharacterModel>> getAllCharacter({int? first , int? last }) async {
     String getManyQuery = """
             query Query(\$first: Int, \$last: Int) {
 
-        allPeople(first: \$first, last: \$last) {
+        allCharacter(first: \$first, last: \$last) {
           totalCount
-          people {
+          Person {
             birthYear
             created
             edited
@@ -42,7 +42,7 @@ class GraphQlDataSource {
     if (result.data == null) {
       return [];
     }
-    return (result.data?["allPeople"]["people"] as List<dynamic>)
+    return (result.data?["allPerson"]["Person"] as List<dynamic>)
         .map((person) => CharacterModel.fromJson(person))
         .toList();
   }

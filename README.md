@@ -1,6 +1,6 @@
 # StarWars
 
-Aplicación de starwars que pueda agregar y eliminar de favoritos, obteninendo los personajes desde una bd graphql, testear, usar jenkins, docker, json web tocken
+Aplicación de starwars que pueda agregar y eliminar de favoritos, obteninendo los personajes desde una bd graphql, testear, usar jenkins, docker, json web token
 
 design principles
 

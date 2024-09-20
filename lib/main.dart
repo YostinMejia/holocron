@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart';
 import 'package:star_wars/bloc/character_bloc.dart';
 import 'package:star_wars/config/graphql_config.dart';
 import 'package:star_wars/data/datasource/graphql_datasource.dart';
@@ -30,12 +31,12 @@ class MainApp extends StatelessWidget {
           restDataSource: RESTDataSource(
               baseUrl: "https://akabab.github.io/starwars-api/api",
               getAllPath: "/all.json",
-              getByIDPath: "/id"),
+              getByIDPath: "/id",
+              client: Client()),
           graphQlDataSource: GraphQlDataSource(
               graphQLClient: GraphQlConfig(
-                      link:
-                          "https://swapi-graphql.netlify.app/.netlify/functions/index")
-                  .client())),
+                      link:"https://swapi-graphql.netlify.app/.netlify/functions/index").client())
+        ),
       child: BlocProvider(
         create: (context) =>
             CharactersBloc(context.read<CharacterRepository>()),
@@ -66,7 +67,7 @@ class _MainTemplateStateState extends State<MainTemplateState> {
       alignment: Alignment.center,
       child: const Text("Categories"),
     ),
-    Home(),
+    const Home(),
     Container(
       alignment: Alignment.center,
       child: const Text("favorites"),
@@ -100,4 +101,3 @@ class _MainTemplateStateState extends State<MainTemplateState> {
     );
   }
 }
-

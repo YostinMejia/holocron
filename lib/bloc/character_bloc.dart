@@ -17,7 +17,7 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
     emit(CharactersLoading());
     try {
       final List<CharacterModel> characters =
-          await characterRepository.fetchPeople();
+          await characterRepository.fetchCharacter();
       emit(CharactersLoaded(characters: characters));
     } catch (e) {
       emit(CharactersError(e.toString()));

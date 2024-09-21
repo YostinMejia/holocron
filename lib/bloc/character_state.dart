@@ -3,7 +3,9 @@ part of 'character_bloc.dart';
 @immutable
 sealed class CharactersState {}
 
-final class CharactersInitial extends CharactersState {}
+final class CharactersInitial extends CharactersState {
+  final List<CharacterModel> characters =[];
+}
 
 final class CharactersLoading extends CharactersState{}
 

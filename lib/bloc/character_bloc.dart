@@ -9,7 +9,7 @@ part 'character_state.dart';
 class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
   final CharacterRepository characterRepository;
   CharactersBloc(this.characterRepository) : super(CharactersInitial()) {
-    on<CharactersEvent>(_fetchCharacters);
+    on<CharacterFetched>(_fetchCharacters);
   }
 
   void _fetchCharacters(

@@ -12,6 +12,8 @@ import 'package:star_wars/ui/theme/util.dart';
 import 'package:star_wars/ui/widgets/bottom_nav_bar.dart';
 import 'package:star_wars/ui/widgets/top_app_bar.dart';
 
+// TODO implemet flutter analyzer, github actions, git hooks 
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MainApp());

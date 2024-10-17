@@ -30,6 +30,7 @@ void main() {
 
         // Call the function we are testing
         List<CharacterModel> res = await restDataSource.getAllCharacter();
+        expect(res, "");
         expect(res, []);
       });
 

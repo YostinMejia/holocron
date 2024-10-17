@@ -1,0 +1,29 @@
+name: Flutter CI Pipeline
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs: 
+  flutter_test :
+    runs-on: ubuntu-latest
+  
+    steps:
+      - name: Checkout code 
+        uses: actions/checkout@v4
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: 23
+          distribution: temurin
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version-file: pubspec.yaml
+      - run: flutter analyze
+      - run: flutter test
+      
+
+    

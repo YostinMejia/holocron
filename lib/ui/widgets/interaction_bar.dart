@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class CustomInteractionBar extends StatefulWidget {
-  bool liked;
-  List<String> comments;
+  final bool liked;
+  final List<String> comments;
 
-  CustomInteractionBar(
+  const CustomInteractionBar(
       {super.key, required this.liked, required this.comments});
 
   @override
@@ -12,6 +12,16 @@ class CustomInteractionBar extends StatefulWidget {
 }
 
 class _CustomInteractionBarState extends State<CustomInteractionBar> {
+  late bool liked;
+  late List<String> comments;
+
+  @override
+  void initState() {
+    super.initState();
+    liked = widget.liked;
+    comments = widget.comments;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -21,7 +31,7 @@ class _CustomInteractionBarState extends State<CustomInteractionBar> {
             IconButton(
               onPressed: () {
                 setState(() {
-                  widget.liked = !widget.liked;
+                  liked = !widget.liked;
                 });
               },
               isSelected: widget.liked,

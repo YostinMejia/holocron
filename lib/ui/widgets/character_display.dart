@@ -54,7 +54,7 @@ class CharacterDisplay extends StatelessWidget {
                                         controller: scrollController),
                                   )));
                     }),
-                Positioned(
+                const Positioned(
                     right: 0,
                     bottom: kToolbarHeight,
                     child: CustomInteractionBar(liked: false, comments: [])),

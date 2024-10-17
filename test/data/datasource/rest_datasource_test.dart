@@ -29,7 +29,6 @@ void main() {
             .thenAnswer((_) async => http.Response("", 200));
 
         // Call the function we are testing
-
         List<CharacterModel> res = await restDataSource.getAllCharacter();
         expect(res, []);
       });

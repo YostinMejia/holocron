@@ -1,10 +1,9 @@
-name: CI Pipeline
+name: Flutter CI Pipeline
 
 on:
-  push:
+  pull_request:
     branches:
       - main
-      - dev
 
 jobs: 
   flutter_test :

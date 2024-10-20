@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "476291362805",
+    "project_id": "starwars-24ca1",
+    "storage_bucket": "starwars-24ca1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:476291362805:android:0a82d53b4419489182fabc",
+        "android_client_info": {
+          "package_name": "com.yos.holocron"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRUEaFmWg5SPVTvWbSuvTjhsyfD7hJAEs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

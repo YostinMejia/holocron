@@ -4,14 +4,9 @@ import 'package:flutter/material.dart';
 class Profile extends StatelessWidget {
   const Profile({super.key});
 
-  User? streamUser() {
-    FirebaseAuth.instance.currentUser;
-  }
-
   @override
   Widget build(BuildContext context) {
     final User? user = FirebaseAuth.instance.currentUser;
-    print(user);
     return Padding(
       padding: const EdgeInsets.only(top: kToolbarHeight),
       child: Column(

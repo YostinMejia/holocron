@@ -26,7 +26,7 @@ class _MainTemplateStateState extends State<MainTemplateState> {
       alignment: Alignment.center,
       child: const Text("favorites"),
     ),
-    Profile()
+    const Profile()
   ];
 
   @override

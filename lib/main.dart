@@ -6,16 +6,16 @@ import 'package:star_wars/config/graphql_config.dart';
 import 'package:star_wars/data/datasource/graphql_datasource.dart';
 import 'package:star_wars/data/datasource/rest_datasource.dart';
 import 'package:star_wars/data/repositories/character_repository.dart';
-import 'package:star_wars/ui/screens/home.dart';
+import 'package:star_wars/ui/screens/authentication.dart';
 import 'package:star_wars/ui/theme/theme.dart';
 import 'package:star_wars/ui/theme/util.dart';
-import 'package:star_wars/ui/widgets/bottom_nav_bar.dart';
-import 'package:star_wars/ui/widgets/top_app_bar.dart';
 
-// TODO implemet flutter analyzer, github actions, git hooks 
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MainApp());
 }
 
@@ -37,8 +37,9 @@ class MainApp extends StatelessWidget {
               client: Client()),
           graphQlDataSource: GraphQlDataSource(
               graphQLClient: GraphQlConfig(
-                      link:"https://swapi-graphql.netlify.app/.netlify/functions/index").client())
-        ),
+                      link:
+                          "https://swapi-graphql.netlify.app/.netlify/functions/index")
+                  .client())),
       child: BlocProvider(
         create: (context) =>
             CharactersBloc(context.read<CharacterRepository>()),
@@ -48,58 +49,8 @@ class MainApp extends StatelessWidget {
             theme: brightness == Brightness.light
                 ? materialTheme.light()
                 : materialTheme.dark(),
-            home: const MainTemplateState()),
+            home: const Authentication()),
       ),
-    );
-  }
-}
-
-class MainTemplateState extends StatefulWidget {
-  const MainTemplateState({super.key});
-
-  @override
-  State<MainTemplateState> createState() => _MainTemplateStateState();
-}
-
-class _MainTemplateStateState extends State<MainTemplateState> {
-  int selectedIndex = 1;
-
-  late List<Widget> pages = [
-    Container(
-      alignment: Alignment.center,
-      child: const Text("Categories"),
-    ),
-    const Home(),
-    Container(
-      alignment: Alignment.center,
-      child: const Text("favorites"),
-    ),
-    Container(
-      alignment: Alignment.center,
-      child: const Text("profile"),
-    )
-  ];
-
-  @override
-  void initState() {
-    super.initState();
-    context.read<CharactersBloc>().add(CharacterFetched());
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      extendBodyBehindAppBar: true,
-      appBar: const CustomAppBar(),
-      body: IndexedStack(index: selectedIndex, children: pages),
-      bottomNavigationBar: CustomBottomNavigationBar(
-          selectedIndex: selectedIndex,
-          onTap: (index) => {
-                setState(() {
-                  selectedIndex = index;
-                })
-              }),
     );
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:star_wars/data/models/character_model.dart';
+import 'package:star_wars/data/models/user_model.dart';
 import 'package:star_wars/ui/widgets/interaction_bar.dart';
+import 'package:star_wars/ui/widgets/network_img_loader.dart';
 
 class CharacterDisplay extends StatelessWidget {
   final List<CharacterModel> charactersDetails;
@@ -16,15 +18,14 @@ class CharacterDisplay extends StatelessWidget {
       child: PageView.builder(
           scrollDirection: Axis.vertical,
           itemBuilder: (context, index) {
+            CharacterModel character =
+                charactersDetails[index % charactersDetails.length];
+
             return Stack(
               fit: StackFit.expand,
               children: [
-                charactersDetails[index % charactersDetails.length].image !=
-                        null
-                    ? NetworkImageLoader(
-                        imageUrl:
-                            charactersDetails[index % charactersDetails.length]
-                                .image!)
+                character.image != null
+                    ? NetworkImageLoader(imageUrl: character.image!)
                     : const Center(child: Text("No image available")),
                 DraggableScrollableSheet(
                     initialChildSize: 0.14,
@@ -47,50 +48,24 @@ class CharacterDisplay extends StatelessWidget {
                                   child: Transform.translate(
                                     offset: const Offset(0, -kToolbarHeight),
                                     child: DisplayElementCharacteristics(
-                                        charactersDetails: charactersDetails[
-                                                index %
-                                                    charactersDetails.length]
-                                            .toJson(),
+                                        charactersDetails: character.toJson(),
                                         controller: scrollController),
                                   )));
                     }),
-                const Positioned(
+                Positioned(
                     right: 0,
                     bottom: kToolbarHeight,
-                    child: CustomInteractionBar(liked: false, comments: [])),
+                    child: CustomInteractionBar(
+                        liked: false,
+                        characterInfo: FavoriteModel(
+                            id: character.id,
+                            url: character.url,
+                            name: character.name,
+                            imageUrl: character.image ?? ""),
+                        comments: const [])),
               ],
             );
           }),
-    );
-  }
-}
-
-class NetworkImageLoader extends StatelessWidget {
-  const NetworkImageLoader({
-    super.key,
-    required this.imageUrl,
-  });
-
-  final String imageUrl;
-
-  @override
-  Widget build(BuildContext context) {
-    return Image.network(
-      imageUrl,
-      loadingBuilder: (context, child, ImageChunkEvent? loadingProgress) {
-        return loadingProgress == null
-            ? child
-            : const Center(child: CircularProgressIndicator.adaptive());
-      },
-      errorBuilder: (context, error, stackTrace) {
-        return Center(
-          child: Icon(
-            Icons.error,
-            color: Theme.of(context).colorScheme.error,
-          ),
-        );
-      },
-      fit: BoxFit.cover,
     );
   }
 }

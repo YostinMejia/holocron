@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart';
 import 'package:star_wars/bloc/character_bloc.dart';
 import 'package:star_wars/config/graphql_config.dart';
+import 'package:star_wars/cubit/user_cubit.dart';
 import 'package:star_wars/data/datasource/graphql_datasource.dart';
 import 'package:star_wars/data/datasource/rest_datasource.dart';
 import 'package:star_wars/data/repositories/character_repository.dart';
@@ -37,14 +38,20 @@ class MainApp extends StatelessWidget {
               client: Client()),
           graphQlDataSource: GraphQlDataSource(
               graphQLClient: GraphQlConfig(
-                      link:
-                          "https://swapi-graphql.netlify.app/.netlify/functions/index")
+                      link:"https://studio.apollographql.com/public/star-wars-swapi/variant/current/explorer")
+                          
                   .client())),
-      child: BlocProvider(
-        create: (context) =>
-            CharactersBloc(context.read<CharacterRepository>()),
+      child: MultiBlocProvider(
+        providers:[
+          BlocProvider<CharactersBloc>(
+          create: (context) =>
+            CharactersBloc(context.read<CharacterRepository>())),
+          BlocProvider<UserCubit>(create: 
+            (context)=>UserCubit())
+            
+            ],
         child: MaterialApp(
-            title: "Star Wars Dex",
+            title: "Holocron",
             debugShowCheckedModeBanner: false,
             theme: brightness == Brightness.light
                 ? materialTheme.light()

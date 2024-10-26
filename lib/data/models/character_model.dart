@@ -4,11 +4,12 @@ class CharacterModel {
   String? eyeColor;
   String? gender;
   String? hairColor;
-  String? name;
+  String name;
   String? skinColor;
   String? image;
   double? height;
   double? mass;
+  String url;
 
   CharacterModel({
     required this.id,
@@ -18,9 +19,10 @@ class CharacterModel {
     required this.hairColor,
     required this.name,
     required this.skinColor,
+    required this.url,
     this.height,
     this.image,
-    this.mass,
+    this.mass
   });
 
   factory CharacterModel.fromJson(Map<String, dynamic> json) => CharacterModel(
@@ -34,6 +36,7 @@ class CharacterModel {
         height: json["height"] is int ? json["height"].toDouble() : json["height"],
         mass: json["mass"] is int ? json["mass"].toDouble() : json["mass"],
         image: json["image"],
+        url: json["url"]??"",
       );
 
   Map<String, dynamic> toJson() => {
@@ -47,5 +50,6 @@ class CharacterModel {
         "height": height,
         "mass": mass,
         "image": image,
+        "url": url
       };
 }

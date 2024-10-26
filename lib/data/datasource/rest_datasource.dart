@@ -22,18 +22,22 @@ class RESTDataSource {
       if (res.body.isEmpty) {
         return [];
       }
-
-      return (jsonDecode(res.body) as List<dynamic>)
-          .map((characters) => CharacterModel.fromJson(characters))
-          .toList();
+      final characters = (jsonDecode(res.body) as List<dynamic>).map((characterResponse) {
+        var character = CharacterModel.fromJson(characterResponse);
+        character.url = "";
+        return character;
+      }).toList();
+      return characters;
     } catch (e) {
+
       return [];
     }
   }
 
   Future<CharacterModel?> getCharacterById(String id) async {
     try {
-      var res = await client.get(Uri.https(uri.host, "${uri.path}$getByIDPath$id"));
+      var res =
+          await client.get(Uri.https(uri.host, "${uri.path}$getByIDPath$id"));
 
       // Could not find the character
       if (res.statusCode == 404) {

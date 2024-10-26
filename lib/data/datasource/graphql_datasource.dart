@@ -8,9 +8,8 @@ class GraphQlDataSource {
 
   Future<List<CharacterModel>> getAllCharacter({int? first , int? last }) async {
     String getManyQuery = """
-            query Query(\$first: Int, \$last: Int) {
-
-        allCharacter(first: \$first, last: \$last) {
+        query (\$first: Int, \$last: Int) {
+        allPeople(first: \$first, last: \$last) {
           totalCount
           Person {
             birthYear
@@ -30,11 +29,9 @@ class GraphQlDataSource {
     """;
 
     QueryResult result = await graphQLClient.query(QueryOptions(
-      fetchPolicy: FetchPolicy.noCache,
       document: gql(getManyQuery),
       variables: {"first": first, "last": last},
     ));
-
     if (result.hasException) {
       throw Exception(result.exception);
     }

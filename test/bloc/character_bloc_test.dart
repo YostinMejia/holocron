@@ -29,6 +29,7 @@ void main() {
         // Create a fake character for testing
         CharacterModel fakeCharacter = CharacterModel(
           id: "999",
+          url: "https://swapi.dev/api/people/1/",
           birthYear: "50BBY",
           eyeColor: "green",
           gender: "male",

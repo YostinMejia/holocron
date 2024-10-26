@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:star_wars/cubit/user_cubit.dart';
+import 'package:star_wars/data/models/user_model.dart';
 
 class CustomInteractionBar extends StatefulWidget {
   final bool liked;
   final List<String> comments;
+  final FavoriteModel characterInfo;
 
   const CustomInteractionBar(
-      {super.key, required this.liked, required this.comments});
+      {super.key,
+      required this.liked,
+      required this.comments,
+      required this.characterInfo});
 
   @override
   State<CustomInteractionBar> createState() => _CustomInteractionBarState();
@@ -31,10 +38,17 @@ class _CustomInteractionBarState extends State<CustomInteractionBar> {
             IconButton(
               onPressed: () {
                 setState(() {
-                  liked = !widget.liked;
+                  liked = !liked;
+
+                  if (context.read<UserCubit>().state is UserLoggedIn) {
+                    (context.read<UserCubit>().state);
+                    liked
+                        ? BlocProvider.of<UserCubit>(context).addFavorite(widget.characterInfo)
+                        :BlocProvider.of<UserCubit>(context).deleteFavorite(widget.characterInfo.id);
+                  }
                 });
               },
-              isSelected: widget.liked,
+              isSelected: liked,
               selectedIcon: const Icon(
                 Icons.favorite,
                 color: Colors.red,
@@ -44,8 +58,8 @@ class _CustomInteractionBarState extends State<CustomInteractionBar> {
             ),
             Transform.translate(
                 offset: const Offset(0, -10),
-                child: Text("${widget.liked}",
-                    style: const TextStyle(color: Colors.white)))
+                child:
+                    Text("$liked", style: const TextStyle(color: Colors.white)))
           ],
         ),
         Column(

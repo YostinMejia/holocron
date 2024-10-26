@@ -11,7 +11,6 @@ class CharacterRepository {
 
   Future<List<CharacterModel>> fetchCharacter([int? amount]) async {
     List<CharacterModel> characterGraphql = await restDataSource.getAllCharacter();
-
     if (characterGraphql.isEmpty) {
       return graphQlDataSource.getAllCharacter();
     }

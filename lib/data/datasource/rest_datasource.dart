@@ -24,7 +24,7 @@ class RESTDataSource {
       }
       final characters = (jsonDecode(res.body) as List<dynamic>).map((characterResponse) {
         var character = CharacterModel.fromJson(characterResponse);
-        character.url = "";
+        character.url = "$baseUrl$getByIDPath/${character.id}.json";
         return character;
       }).toList();
       return characters;

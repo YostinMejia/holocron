@@ -1,25 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:star_wars/data/models/character_model.dart';
-import 'package:star_wars/data/models/user_model.dart';
 import 'package:star_wars/ui/widgets/interaction_bar.dart';
 import 'package:star_wars/ui/widgets/network_img_loader.dart';
 
 class CharacterDisplay extends StatelessWidget {
   final List<CharacterModel> charactersDetails;
-
-  const CharacterDisplay({super.key, required this.charactersDetails});
+  final int indexInit;
+  final double offsetDy;
+  const CharacterDisplay({super.key, required this.charactersDetails, this.indexInit = 0, this.offsetDy = kToolbarHeight});
 
   @override
   Widget build(BuildContext context) {
+    int index = indexInit-1;
     return Container(
       color: Theme.of(context).colorScheme.surfaceContainer,
       width: double.maxFinite,
       height: double.maxFinite,
       child: PageView.builder(
           scrollDirection: Axis.vertical,
-          itemBuilder: (context, index) {
+          itemBuilder: (context, _ ) {
+            index+=1;
+            
             CharacterModel character =
-                charactersDetails[index % charactersDetails.length];
+                charactersDetails[index % charactersDetails.length ];
 
             return Stack(
               fit: StackFit.expand,
@@ -33,12 +36,8 @@ class CharacterDisplay extends StatelessWidget {
                     builder: (BuildContext context,
                         ScrollController scrollController) {
                       return
-                          // Use Transform.translate to adjust the container position
-                          // this offset pushes the container down to ensure the widget inside
-                          // DisplayElementCharacteristics can be shown correctly
-                          Transform.translate(
-                              offset: const Offset(0, kToolbarHeight),
-                              child: Container(
+
+                         Container(
                                   color: Theme.of(context)
                                       .colorScheme
                                       .primaryContainer,
@@ -46,23 +45,18 @@ class CharacterDisplay extends StatelessWidget {
                                   // of the initial position of DisplayElementCharacteristics.
                                   // this is necessary because extendBodyBehindAppBar is set to true
                                   child: Transform.translate(
-                                    offset: const Offset(0, -kToolbarHeight),
+                                    offset: Offset(0, -offsetDy),
                                     child: DisplayElementCharacteristics(
                                         charactersDetails: character.toJson(),
                                         controller: scrollController),
-                                  )));
+                                  ));
                     }),
                 Positioned(
                     right: 0,
                     bottom: kToolbarHeight,
                     child: CustomInteractionBar(
-                        liked: false,
-                        characterInfo: FavoriteModel(
-                            id: character.id,
-                            url: character.url,
-                            name: character.name,
-                            imageUrl: character.image ?? ""),
-                        comments: const [])),
+                      characterInfo: character,
+                    )),
               ],
             );
           }),
@@ -73,8 +67,7 @@ class CharacterDisplay extends StatelessWidget {
 class DisplayElementCharacteristics extends StatelessWidget {
   final Map<String, dynamic> charactersDetails;
   final ScrollController controller;
-  const DisplayElementCharacteristics(
-      {super.key, required this.charactersDetails, required this.controller});
+  const DisplayElementCharacteristics({super.key, required this.charactersDetails, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -101,22 +94,19 @@ class DisplayElementCharacteristics extends StatelessWidget {
           );
         }
 
-        return RichText(
-          text: TextSpan(children: [
+        return SelectableText.rich(
+          style: fonts.bodyMedium,
+          TextSpan(children: [
             TextSpan(
                 text: "$characteristic: ",
                 style: TextStyle(
                     color: colors.onSecondaryContainer,
-                    fontSize: fonts.bodyMedium?.fontSize,
-                    fontStyle: fonts.bodyMedium?.fontStyle,
-                    fontFamily: fonts.bodyMedium?.fontFamily)),
+)),
             TextSpan(
                 text: "${charactersDetails[characteristic]}",
                 style: TextStyle(
                     color: colors.onSurface,
-                    fontSize: fonts.bodyMedium?.fontSize,
-                    fontStyle: fonts.bodyMedium?.fontStyle,
-                    fontFamily: fonts.bodyMedium?.fontFamily))
+))
           ]),
         );
       },

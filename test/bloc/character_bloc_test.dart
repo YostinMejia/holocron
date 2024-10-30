@@ -8,6 +8,8 @@ import 'package:star_wars/data/repositories/character_repository.dart';
 
 import 'character_bloc_test.mocks.dart';
 
+//TODO Implement test for the new functionalities (likes, dislike, login, signup, authentication, signout) learn what is end to end test 
+
 // Generate a mock class for the CharacterRepository using Mockito
 @GenerateMocks([CharacterRepository])
 void main() {

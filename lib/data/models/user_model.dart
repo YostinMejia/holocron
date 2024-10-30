@@ -1,4 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:star_wars/data/models/character_model.dart';
+
+
+class Favorites{
+  final List<CharacterModel> liked;
+  final Set<String> ids;
+
+  Favorites({required this.liked, required this.ids});
+}
 
 @immutable
 class FavoriteModel {
@@ -18,21 +27,23 @@ class UserModel {
   final String id;
   final String name;
   final String email;
-  final List<FavoriteModel> favoritesUrl;
+  final Favorites favorites;
   final List<String> comments;
 
   UserModel(
       {required this.id,
       required this.email,
       required this.name,
-      required this.favoritesUrl,
+      required this.favorites,
       required this.comments});
 
-  void addFavorite(FavoriteModel favorite) {
-    favoritesUrl.add(favorite);
+  void addFavorite(CharacterModel character) {
+    favorites.liked.add(character);
+    favorites.ids.add(character.id);
   }
 
   void deleteFavorite(String id) {
-    favoritesUrl.removeWhere((favorite) => favorite.id == id);
+    favorites.liked.removeWhere((favorite) => favorite.id == id);
+    favorites.ids.remove(id);
   }
 }

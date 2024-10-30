@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:star_wars/data/models/character_model.dart';
 import 'package:star_wars/data/models/user_model.dart';
 
 part 'user_state.dart';
@@ -16,12 +17,12 @@ class UserCubit extends Cubit<UserState> {
         id: id,
         email: email,
         name: name ?? "John Doe",
-        favoritesUrl: [],
+        favorites:Favorites(liked: [], ids: {}),
         comments: []);
     emit(UserLoggedIn(user: user));
   }
 
-  void addFavorite(FavoriteModel character) {
+  void addFavorite(CharacterModel character) {
     if (state is UserLoggedIn) {
       final currentUser = (state as UserLoggedIn).user;
       currentUser.addFavorite(character);
@@ -29,7 +30,7 @@ class UserCubit extends Cubit<UserState> {
         id: currentUser.id,
         email: currentUser.email,
         name: currentUser.name,
-        favoritesUrl: currentUser.favoritesUrl,
+        favorites: currentUser.favorites,
         comments: currentUser.comments,
       );
       emit(UserLoggedIn(user: updatedUser));
@@ -45,7 +46,7 @@ class UserCubit extends Cubit<UserState> {
         id: currentUser.id,
         email: currentUser.email,
         name: currentUser.name,
-        favoritesUrl: currentUser.favoritesUrl,
+        favorites: currentUser.favorites,
         comments: currentUser.comments,
       );
       emit(UserLoggedIn(user: updatedUser));

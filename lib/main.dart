@@ -14,6 +14,7 @@ import 'package:star_wars/ui/theme/util.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -38,18 +39,16 @@ class MainApp extends StatelessWidget {
               client: Client()),
           graphQlDataSource: GraphQlDataSource(
               graphQLClient: GraphQlConfig(
-                      link:"https://studio.apollographql.com/public/star-wars-swapi/variant/current/explorer")
-                          
+                      link:
+                          "https://swapi-graphql.netlify.app/.netlify/functions/index")
                   .client())),
       child: MultiBlocProvider(
-        providers:[
+        providers: [
           BlocProvider<CharactersBloc>(
-          create: (context) =>
-            CharactersBloc(context.read<CharacterRepository>())),
-          BlocProvider<UserCubit>(create: 
-            (context)=>UserCubit())
-            
-            ],
+              create: (context) =>
+                  CharactersBloc(context.read<CharacterRepository>())),
+          BlocProvider<UserCubit>(create: (context) => UserCubit())
+        ],
         child: MaterialApp(
             title: "Holocron",
             debugShowCheckedModeBanner: false,

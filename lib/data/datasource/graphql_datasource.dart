@@ -1,6 +1,8 @@
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:star_wars/data/models/character_model.dart';
 
+// TODO: IMPLEMENT LOCAL STORAGE AND HIVE O ISAR to no network navegation.
+
 class GraphQlDataSource {
   final GraphQLClient graphQLClient;
 
@@ -8,10 +10,10 @@ class GraphQlDataSource {
 
   Future<List<CharacterModel>> getAllCharacter({int? first , int? last }) async {
     String getManyQuery = """
-        query (\$first: Int, \$last: Int) {
+       query (\$first: Int, \$last: Int) {
         allPeople(first: \$first, last: \$last) {
           totalCount
-          Person {
+          people {
             birthYear
             created
             edited
@@ -32,14 +34,16 @@ class GraphQlDataSource {
       document: gql(getManyQuery),
       variables: {"first": first, "last": last},
     ));
+    
     if (result.hasException) {
       throw Exception(result.exception);
     }
-
+    
     if (result.data == null) {
       return [];
     }
-    return (result.data?["allPerson"]["Person"] as List<dynamic>)
+
+    return (result.data?["allPeople"]["people"] as List<dynamic>)
         .map((person) => CharacterModel.fromJson(person))
         .toList();
   }

@@ -36,8 +36,7 @@ class RESTDataSource {
 
   Future<CharacterModel?> getCharacterById(String id) async {
     try {
-      var res =
-          await client.get(Uri.https(uri.host, "${uri.path}$getByIDPath$id"));
+      var res = await client.get(Uri.https(uri.host, "${uri.path}$getByIDPath$id"));
 
       // Could not find the character
       if (res.statusCode == 404) {

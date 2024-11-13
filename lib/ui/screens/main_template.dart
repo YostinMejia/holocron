@@ -17,14 +17,11 @@ class MainTemplateState extends StatefulWidget {
 class _MainTemplateStateState extends State<MainTemplateState> {
   int selectedIndex = 1;
 
-  @override
-  void initState() {
-    super.initState();
-    context.read<CharactersBloc>().add(CharacterFetched());
-  }
 
   @override
   Widget build(BuildContext context) {
+    context.read<CharactersBloc>().add(CharacterFetched());
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       extendBodyBehindAppBar: true,

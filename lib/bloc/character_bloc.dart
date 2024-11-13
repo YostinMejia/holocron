@@ -12,8 +12,7 @@ class CharactersBloc extends Bloc<CharactersEvent, CharactersState> {
     on<CharacterFetched>(_fetchCharacters);
   }
 
-  void _fetchCharacters(
-      CharactersEvent event, Emitter<CharactersState> emit) async {
+  void _fetchCharacters(CharactersEvent event, Emitter<CharactersState> emit) async {
     emit(CharactersLoading());
     try {
       final List<CharacterModel> characters = await characterRepository.fetchCharacter();

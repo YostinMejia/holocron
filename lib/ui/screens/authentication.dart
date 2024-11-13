@@ -37,7 +37,7 @@ class _AuthenticationState extends State<Authentication> {
   Widget build(BuildContext context) {
     if (user != null) {
       BlocProvider.of<UserCubit>(context).logInUser(
-          id: user!.uid,
+          id:  user!.uid,
           email: user!.email!,
           name: user!.displayName );
       return const MainTemplateState();

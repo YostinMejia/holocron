@@ -10,7 +10,8 @@ final class UserInitial extends UserState {
 final class UserLoggedIn extends UserState{
 
   final UserModel user;
-  UserLoggedIn({required this.user});
+  final IsarUserModel isarUser;
+  UserLoggedIn({required this.user, required this.isarUser });
 }
 
 

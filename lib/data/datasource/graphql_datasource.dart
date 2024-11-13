@@ -1,8 +1,6 @@
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:star_wars/data/models/character_model.dart';
 
-// TODO: IMPLEMENT LOCAL STORAGE AND HIVE O ISAR to no network navegation.
-
 class GraphQlDataSource {
   final GraphQLClient graphQLClient;
 

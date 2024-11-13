@@ -21,8 +21,7 @@ class CharacterDisplay extends StatelessWidget {
           itemBuilder: (context, _ ) {
             index+=1;
             
-            CharacterModel character =
-                charactersDetails[index % charactersDetails.length ];
+            CharacterModel character = charactersDetails[index % charactersDetails.length ];
 
             return Stack(
               fit: StackFit.expand,

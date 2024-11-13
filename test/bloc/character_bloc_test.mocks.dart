@@ -3,13 +3,15 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i5;
+import 'dart:async' as _i6;
 
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:star_wars/data/datasource/graphql_datasource.dart' as _i2;
+import 'package:star_wars/data/datasource/isar_datasource.dart' as _i4;
 import 'package:star_wars/data/datasource/rest_datasource.dart' as _i3;
-import 'package:star_wars/data/models/character_model.dart' as _i6;
-import 'package:star_wars/data/repositories/character_repository.dart' as _i4;
+import 'package:star_wars/data/models/character_model.dart' as _i7;
+import 'package:star_wars/data/models/isar_character_model.dart' as _i8;
+import 'package:star_wars/data/repositories/character_repository.dart' as _i5;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -46,11 +48,22 @@ class _FakeRESTDataSource_1 extends _i1.SmartFake
         );
 }
 
+class _FakeIsarDatasource_2 extends _i1.SmartFake
+    implements _i4.IsarDatasource {
+  _FakeIsarDatasource_2(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [CharacterRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockCharacterRepository extends _i1.Mock
-    implements _i4.CharacterRepository {
+    implements _i5.CharacterRepository {
   MockCharacterRepository() {
     _i1.throwOnMissingStub(this);
   }
@@ -74,13 +87,34 @@ class MockCharacterRepository extends _i1.Mock
       ) as _i3.RESTDataSource);
 
   @override
-  _i5.Future<List<_i6.CharacterModel>> fetchCharacter([int? amount]) =>
+  _i4.IsarDatasource get isarDatasource => (super.noSuchMethod(
+        Invocation.getter(#isarDatasource),
+        returnValue: _FakeIsarDatasource_2(
+          this,
+          Invocation.getter(#isarDatasource),
+        ),
+      ) as _i4.IsarDatasource);
+
+  @override
+  _i6.Future<List<_i7.CharacterModel>> fetchCharacter([int? amount]) =>
       (super.noSuchMethod(
         Invocation.method(
           #fetchCharacter,
           [amount],
         ),
         returnValue:
-            _i5.Future<List<_i6.CharacterModel>>.value(<_i6.CharacterModel>[]),
-      ) as _i5.Future<List<_i6.CharacterModel>>);
+            _i6.Future<List<_i7.CharacterModel>>.value(<_i7.CharacterModel>[]),
+      ) as _i6.Future<List<_i7.CharacterModel>>);
+
+  @override
+  _i6.Future<List<_i8.IsarCharacterModel>> fetchLikedCharacters(
+          String? emailUSer) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #fetchLikedCharacters,
+          [emailUSer],
+        ),
+        returnValue: _i6.Future<List<_i8.IsarCharacterModel>>.value(
+            <_i8.IsarCharacterModel>[]),
+      ) as _i6.Future<List<_i8.IsarCharacterModel>>);
 }

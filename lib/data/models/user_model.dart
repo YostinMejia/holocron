@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:star_wars/data/models/character_model.dart';
-
 
 class Favorites{
   final List<CharacterModel> liked;
@@ -9,19 +7,6 @@ class Favorites{
   Favorites({required this.liked, required this.ids});
 }
 
-@immutable
-class FavoriteModel {
-  final String id;
-  final String url;
-  final String name;
-  final String imageUrl;
-
-  const FavoriteModel(
-      {required this.id,
-      required this.url,
-      required this.name,
-      required this.imageUrl});
-}
 
 class UserModel {
   final String id;

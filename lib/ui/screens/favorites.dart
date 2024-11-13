@@ -58,10 +58,11 @@ class ShowLikes extends StatelessWidget {
                 appBar: AppBar(
                   backgroundColor: Theme.of(context).colorScheme.surface,
                   title: Text(
-                        "Favorites",
-                        style: Theme.of(context).textTheme.titleLarge,
-                        textAlign: TextAlign.center,
-                      ),),
+                    "Favorites",
+                    style: Theme.of(context).textTheme.titleLarge,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
                 body: CharacterDisplay(
                   charactersDetails: likes,
                   indexInit: indexInit,
@@ -74,36 +75,32 @@ class ShowLikes extends StatelessWidget {
     List<Widget> charactersContainer = [];
 
     for (var i = 0; i < likes.length; i++) {
-      charactersContainer.add(
-         Container(
-              color: Theme.of(context).colorScheme.primaryContainer,
-              child: GestureDetector(
-                onTap: () {
-                  redirect(context, likes, i);
-                },
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(
-                        child: NetworkImageLoader(
-                            imageUrl: likes[i].image ?? "")),
-                    Text(
-                      likes[i].name,
-                      style: TextStyle(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onSecondaryContainer),
-                    )
-                  ],
-                ),
-              )));
+      charactersContainer.add(Container(
+          color: Theme.of(context).colorScheme.primaryContainer,
+          child: GestureDetector(
+            onTap: () {
+              redirect(context, likes, i);
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                    child: NetworkImageLoader(imageUrl: likes[i].image ?? "")),
+                Text(
+                  likes[i].name,
+                  style: TextStyle(
+                      color:
+                          Theme.of(context).colorScheme.onSecondaryContainer),
+                )
+              ],
+            ),
+          )));
     }
 
     return GridView.count(
-      crossAxisSpacing: 4,
-      mainAxisSpacing: 4,
-      crossAxisCount: 2,
-      children: charactersContainer
-    );
+        crossAxisSpacing: 4,
+        mainAxisSpacing: 4,
+        crossAxisCount: 2,
+        children: charactersContainer);
   }
 }
